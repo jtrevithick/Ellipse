@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Result</title> 
+    <link rel="stylesheet" type="text/css" href="StyleSheet.css" />
+    <style type="text/css">
+        section {
+            font-family: 'Bodoni MT';
+            border-bottom: 2px;
+            border-bottom-style: solid;
+            border-bottom-color: darkblue;
+        }
+
+        ol {
+            text-indent: 15px;
+            list-style-position: inside;
+        }
+    </style>
+    <meta charset="utf-8" />
+</head>
+<body>
+
+    <header>
+        <h1>Result</h1>
+    </header>
+    <nav>
+        <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="GetForm.html">Ellipse Bulider</a></li>
+        </ol>
+    </nav>
+    <aside>
+        <h2 style="font-size: 12px">World!</h2>
+        <br />
+        <img alt="Picture of the World" src="Images/World.jpg" height="150" width="200" />
+    </aside>
+
+    <div id="mainContent">
+
+        <section>
+
+           <h2 style="font-size: 1px"> <URL> <span id="EntireURL"></span> </URL></h2> 
+            <p>
+               <h2 style="font-size: 17px"> MajorAxis: <span id="MajorAxis"> </span></h2>
+
+            </p>
+            <p>
+              <h2 style="font-size: 17px">  MinorAxis: <span id="MinorAxis"> </span></h2>
+            </p>
+
+            <form action="GetForm.html">
+
+                <input type="submit" value="New Ellipse" />
+            </form>
+
+        </section>
+        <canvas id="thecanvas" width="580" height="580"></canvas>
+
+        <script language="javascript" type="text/javascript">
+            //function to to paramater found at StackOverFlow https://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
+            function getSearchParameters() {
+
+                var prmstr = window.location.search.substr(1);
+                console.log("getSearchParameters()");
+                return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {};
+            }
+
+            function transformToAssocArray(prmstr) {
+                var params = {};
+
+                var prmarr = prmstr.split("&");
+                for (var i = 0; i < prmarr.length; i++) {
+                    var tmparr = prmarr[i].split("=");
+                    params[tmparr[0]] = tmparr[1];
+                }
+                console.log("transformToAssocArray()");
+                return params;
+            }
+
+            var params = getSearchParameters();
+
+            //now create two var variables to set parameters in
+            var number, number2;
+
+            //set parameters in variables
+            number = parseInt(params.minoraxis);
+            number2 = parseInt(params.majoraxis);
+
+
+
+        </script>
+
+
+        <script>
+            //Got from StackOverFlow at https://stackoverflow.com/questions/2172798/how-to-draw-an-oval-in-html5-canvas
+            var canvas = document.getElementById('thecanvas');
+            if (canvas.getContext) {
+                var ctx = canvas.getContext('2d');
+                drawEllipse(ctx, 10, 10, number2, number);//Draw the Ellipse for the user using the variables I put the 
+                //number (minoraxis)for the height and number2 (majoraxis) for the width so it can draw the ellipse correctly.
+
+
+                // drawEllipseByCenter(ctx, 60, 40, 20, 10); just a circle to drawn in the middle of the ellipse not needed
+            }
+
+            function drawEllipseByCenter(ctx, cx, cy, w, h) {
+                drawEllipse(ctx, cx - w / 2.0, cy - h / 2.0, w, h);
+            }
+
+            function drawEllipse(ctx, x, y, w, h) {
+                var kappa = .5522848,
+                    ox = (w / 2) * kappa, // control point offset horizontal
+                    oy = (h / 2) * kappa, // control point offset vertical
+                    xe = x + w,           // x-end
+                    ye = y + h,           // y-end
+                    xm = x + w / 2,       // x-middle
+                    ym = y + h / 2;       // y-middle
+
+
+                //Now begain drawing the ellipse
+                ctx.beginPath();
+                ctx.moveTo(x, ym);
+                ctx.bezierCurveTo(x, ym - oy, xm - ox, y, xm, y);
+                ctx.bezierCurveTo(xm + ox, y, xe, ym - oy, xe, ym);
+                ctx.bezierCurveTo(xe, ym + oy, xm + ox, ye, xm, ye);
+                ctx.bezierCurveTo(xm - ox, ye, x, ym + oy, x, ym);
+                ctx.stroke();
+
+
+            }
+            
+
+        </script>
+        
+    </div>
+    <footer>
+        Usefull Note: <a href="https://www.mathopenref.com/ellipseaxes.html">Understanding major and minor axis on ellipse</a>
+    </footer>
+    <script>
+        //Place entire url into inner text when page loads.
+        document.getElementById("EntireURL").innerHTML = window.location.href;
+
+        //Get first and last name and place it into page
+        document.getElementById("MajorAxis").innerHTML = getParameterByName("majoraxis");
+        document.getElementById("MinorAxis").innerHTML = getParameterByName("minoraxis");
+
+        //Obtained from stackoverflow: http://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+
+        //Place entire url into inner text when page loads.
+        document.getElementById("EntireURL").innerHTML = window.location.href;
+        //Get first and last name and place it into page
+        document.getElementById("MajorAxis").innerHTML = getParameterByName("majoraxis");
+        document.getElementById("MinorAxis").innerHTML = getParameterByName("minoraxis");
+
+    </script>
+
+   
+
+</body>
+</html>

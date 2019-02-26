@@ -1,0 +1,56 @@
+﻿* {
+    margin:0;
+    padding:0;
+}
+body {
+    font-family: Arial;
+    font-size: 10px;
+    min-height:100%;
+}
+
+header {
+    font-family: 'Agency FB';
+    color: goldenrod;
+    font-size: 20px;
+    text-align: center;
+    background-image: url('images/stars.jpg');
+}
+
+#maincontent {
+    height: 500px;
+    background-color: lightgrey;  
+}
+
+nav {
+    float: left;
+    height: 500px;
+    width: 200px;
+    /*padding: 5px;*/
+    vertical-align: top;
+    background-color: #246c96
+}
+
+aside {
+    float: right;
+    height: 200px;
+    width: 200px;
+    background-color: #80acc6;
+}
+
+footer {
+    color: white;
+    background-color: #246c96;
+    clear: both;
+    position: relative;
+    z-index: 10;
+    height: 35em;
+    margin-top: -17em;
+}
+
+header, #maincontent, nav, aside, footer {
+    padding: 10px;
+}
+a {
+    color: yellow;
+}
+
